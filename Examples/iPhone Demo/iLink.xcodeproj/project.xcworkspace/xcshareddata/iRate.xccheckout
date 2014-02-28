@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>06082155-E51D-43DD-A1C3-C15B8A2BB3AE</string>
+	<key>IDESourceControlProjectName</key>
+	<string>iRate</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>EFF5BE73-EF4A-49B1-8B27-1D18A565D6A7</key>
+		<string>https://github.com/nicklockwood/iRate.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Examples/iPhone Demo/iRate.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>EFF5BE73-EF4A-49B1-8B27-1D18A565D6A7</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/nicklockwood/iRate.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>EFF5BE73-EF4A-49B1-8B27-1D18A565D6A7</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>EFF5BE73-EF4A-49B1-8B27-1D18A565D6A7</string>
+			<key>IDESourceControlWCCName</key>
+			<string>iRate</string>
+		</dict>
+	</array>
+</dict>
+</plist>
