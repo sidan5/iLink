@@ -54,8 +54,7 @@ Methods
 
 iLink is used to open App page, developer profile or rating page for the app using the following methods:
 
-* App Links 
-
+- App Links 
 
 	- (void)iLinkOpenAppPageInAppStore;  
 
@@ -74,8 +73,7 @@ This method would create the appropriate link to share on social networks/email 
 This method would create the appropriate link to the app with Apple ID appStoreIDtoOpen. Use this to open another specific app for example the paid version or any reference to other app. Code would recognize if it's an iOS app or Mac app. But pay attention to send the right ID to each app (there isn't same Apple ID for Mac&iOS app for time of writing so you would need to check that if your code support both).
 
 
-* Developer Links
- 
+- Developer Links
 
 	- (void)iLinkOpenDeveloperPage;
 
@@ -88,8 +86,7 @@ Use this method if you want to open the Developer URL by yourself and not by usi
 	- (NSURL *)iLinkGetDeveloperURLforSharing; 
 This method return the URL for the developer profile in the best way for sharing. Use this if you want to share the link outside the app (for example on social networks).
     
-* Rating Links 
-
+- Rating Links 
 
     - (void)openRatingsPageInAppStore;
 
