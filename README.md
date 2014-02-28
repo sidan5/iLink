@@ -110,7 +110,7 @@ This would set if iLink would automatically check if there is an update for the 
 
 This should match the iTunes app ID of your application, which you can get from iTunes connect after setting up your app. This value is not normally necessary and is generally only required if you have the aforementioned conflict between bundle IDs for your Mac and iOS apps, or in the case of Sandboxed Mac apps, if your app does not have network permission because it won't be able to fetch the appStoreID automatically using iTunes services.
 
-   @property (nonatomic, copy) NSString *appStoreCountry;
+    @property (nonatomic, copy) NSString *appStoreCountry;
 
 This is the two-letter country code used to specify which iTunes store to check. It is set automatically from the device locale preferences, so shouldn't need to be changed in most cases. You can override this to point to the US store, or another specific store if you prefer, which may be a good idea if your app is only available in certain countries.
 
@@ -189,7 +189,9 @@ This method would be called after iLink succeeded to fetch all app data from iTu
 
 This method is called if iLink cannot connect to the App Store, usually because the network connection is down. This may also fire if your app does not have access to the network due to Sandbox permissions, in which case you will need to manually set the appStoreID so that iLink can still function.
 
-- (BOOL)iLinkShouldPromptForUpdate;
+	- (BOOL)iLinkShouldPromptForUpdate;
+	
+Should return YES if you want iLink to ask the user for updating the app when there is a newer version available (only if the current version is old).
 
     - (void)iLinkDidDetectAppUpdate;
 
@@ -199,7 +201,7 @@ This method is called if iLink detects that the application has been updated sin
 	
 This method is called immediately before the app page on App Store is displayed. 
 	
-   - (void)iLinkDidPromptForUpdate;
+   	- (void)iLinkDidPromptForUpdate;
 
 This method is called immediately before the update prompt is displayed. This is useful if you use analytics to track what percentage of users see the update prompt and then go to the app store. This can help you fine tune the circumstances around when/how you show the prompt.
 
@@ -221,7 +223,7 @@ This is called when the user asks to be reminded to update the app. This is usef
 Example Projects
 ---------------
 
-When you build and run the basic Mac or iPhone example project for the first time, it will show an alert asking you to update the app. This is because the previewMode option is set.
+When you build and run the basic Mac or iPhone example project for the first time, it will show an alert asking you to update the app. This may be because the previewMode option is set.
 
-Disable the previewMode option and play with the other settings to see how the app behaves in practice.
+Pay attention to disable the previewMode option (if it's on) and play with the other settings to see how the app behaves in practice.
 
