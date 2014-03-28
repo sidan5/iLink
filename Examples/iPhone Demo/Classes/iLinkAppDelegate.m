@@ -27,7 +27,7 @@
     
     //[iLink sharedInstance].globalPromptForUpdate = NO;
     // enable preview mode //  if YES would show prompt always //
-    // [iLink sharedInstance].previewMode = YES;
+    //[iLink sharedInstance].previewMode = YES;
 }
 
 - (BOOL)application:(__unused UIApplication *)application didFinishLaunchingWithOptions:(__unused NSDictionary *)launchOptions

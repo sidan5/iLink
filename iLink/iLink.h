@@ -124,6 +124,7 @@ typedef NS_ENUM(NSUInteger, iLinkErrorCode)
 //app store ID - this is only needed if your
 //bundle ID is not unique between iOS and Mac app stores
 @property (nonatomic, assign) NSUInteger appStoreID,artistID;
+@property (nonatomic, copy) NSString *applicationStoreVersion;
 
 //application details - these are set automatically
 @property (nonatomic, assign) NSUInteger appStoreGenreID;

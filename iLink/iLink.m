@@ -173,6 +173,7 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
 
 - (iLink *)init
 {
+    _applicationStoreVersion = nil;
     if ((self = [super init]))
     {
         
@@ -222,7 +223,7 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
         
         //default settings
         self.useAllAvailableLanguages = YES;
-        self.onlyPromptIfLatestVersion = YES;
+        self.onlyPromptIfLatestVersion = NO;
         self.onlyPromptIfMainWindowIsAvailable = YES;
         self.promptAtLaunch = YES;
         self.usesUntilPrompt = 0;//10;
@@ -274,7 +275,7 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
     NSString *message = _message;
     if (!message)
     {
-        message = [self localizedStringForKey:iLinkAppMessageKey withDefault:@"An update for %@ is available. Would you like to update it now?"];    }
+        message = [self localizedStringForKey:iLinkAppMessageKey withDefault:@"An update for %@ is available. \n\nWould you like to update it now?"];    }
     return [message stringByReplacingOccurrencesOfString:@"%@" withString:self.applicationName];
 }
 
@@ -494,10 +495,15 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
             NSLog(@"iLink did not prompt for update because the user last asked to be reminded less than %g days ago", self.remindPeriod);
         }
         return NO;
+    }else if (self.applicationStoreVersion!=nil){
+        
+        if ([self.applicationStoreVersion compare:self.applicationVersion options:NSNumericSearch] == NSOrderedDescending){ // There is a new version
+        return YES;
+        }
     }
     
     //lets prompt!
-    return YES;
+    return NO;//YES;
 }
 
 - (NSString *)valueForKey:(NSString *)key inJSON:(id)json
@@ -594,6 +600,8 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
     [[NSUserDefaults standardUserDefaults] setInteger:_artistID forKey:iLinkArtistIDKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+
 
 
 - (void)connectionSucceeded
@@ -733,9 +741,13 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
                         }
                         
                         //check version
-                        if (self.onlyPromptIfLatestVersion && !self.previewMode)
+                        if (!self.applicationStoreVersion)
                         {
                             NSString *latestVersion = [self valueForKey:@"version" inJSON:json];
+                            
+                            self.applicationStoreVersion = latestVersion;
+                            
+                            NSLog(@"Latest version on store : %@",latestVersion);
                             if ([latestVersion compare:self.applicationVersion options:NSNumericSearch] == NSOrderedDescending)
                             {
                                 if (self.verboseLogging)
@@ -908,10 +920,19 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
     
     [self incrementUseCount];
     [self checkForConnectivityInBackground];
-    if (self.promptAtLaunch && [self shouldPromptForUpdate])//[self shouldPromptForRating])
-    {
-        [self promptIfNetworkAvailable];
-    }
+    
+    // Ugly implementation for waiting till network respond. Should be done by a callback.
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        if (self.promptAtLaunch && [self shouldPromptForUpdate])//[self shouldPromptForRating])
+        {
+            [self promptIfNetworkAvailable];
+        }
+    });
+    
+    
 }
 
 #if TARGET_OS_IPHONE
