@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'iLink'
-  s.version  = '1.0'
+  s.version  = '1.0.1'
   s.license  = 'zlib'
   s.summary  = 'A handy class that create the links needed for the app page, developer profile or rating for iOS or Mac. The class also prompts users of your iPhone or Mac App Store app to update your application if there is a new version.'
   s.homepage = 'https://github.com/sidan5/iLink'
