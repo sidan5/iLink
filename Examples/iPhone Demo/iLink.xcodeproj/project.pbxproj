@@ -17,7 +17,7 @@
 		2899E5220DE3E06400AC0155 /* iLinkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* iLinkViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* iLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* iLinkViewController.m */; };
-		CF8375A518B4AA0600C10EF1 /* iLink.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8375A418B4AA0600C10EF1 /* iLink.m */; };
+		CF7CEB0C18E6C3B600063138 /* iLink.m in Sources */ = {isa = PBXBuildFile; fileRef = CF7CEB0B18E6C3B600063138 /* iLink.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,8 +36,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iLink_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iLink_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* iLink-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iLink-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		CF8375A318B4AA0600C10EF1 /* iLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = iLink.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		CF8375A418B4AA0600C10EF1 /* iLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = iLink.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		CF7CEB0A18E6C3B600063138 /* iLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iLink.h; sourceTree = "<group>"; };
+		CF7CEB0B18E6C3B600063138 /* iLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iLink.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,8 +121,8 @@
 		CF8375A218B4AA0600C10EF1 /* iLink */ = {
 			isa = PBXGroup;
 			children = (
-				CF8375A318B4AA0600C10EF1 /* iLink.h */,
-				CF8375A418B4AA0600C10EF1 /* iLink.m */,
+				CF7CEB0A18E6C3B600063138 /* iLink.h */,
+				CF7CEB0B18E6C3B600063138 /* iLink.m */,
 			);
 			name = iLink;
 			path = ../../iLink;
@@ -206,7 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
-				CF8375A518B4AA0600C10EF1 /* iLink.m in Sources */,
+				CF7CEB0C18E6C3B600063138 /* iLink.m in Sources */,
 				1D3623260D0F684500981E51 /* iLinkAppDelegate.m in Sources */,
 				28D7ACF80DDB3853001CB0EB /* iLinkViewController.m in Sources */,
 			);

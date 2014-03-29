@@ -173,7 +173,7 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
 
 - (iLink *)init
 {
-    _applicationStoreVersion = nil;
+    self.applicationStoreVersion = nil;
     if ((self = [super init]))
     {
         
