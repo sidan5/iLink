@@ -45,7 +45,7 @@ If you do wish to customise iLink, the best time to do this is *before* the app 
 	+ (void)initialize
 	{
 		//configure iLink
-		[iLink sharedInstance].globalPromptForUpdate = NO; // If you don't want iLink to prompt user to update when the app is old.
+		[iLink sharedInstance].globalPromptForUpdate = YES; // If you want iLink to prompt user to update when the app is old.
 	}
 	
 	
