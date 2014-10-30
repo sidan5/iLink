@@ -10,29 +10,29 @@
 	<string>iLink</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>ECB3CDCF-902F-4E14-BAB0-EF5C02989C9E</key>
+		<key>0CF5012D3E1B3915A74E8EA35EE8AA64C40B3072</key>
 		<string>https://github.com/sidan5/iLink.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Examples/iPhone Demo/iLink.xcodeproj/project.xcworkspace</string>
+	<string>Examples/iPhone Demo/iLink.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>ECB3CDCF-902F-4E14-BAB0-EF5C02989C9E</key>
+		<key>0CF5012D3E1B3915A74E8EA35EE8AA64C40B3072</key>
 		<string>../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/sidan5/iLink.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>ECB3CDCF-902F-4E14-BAB0-EF5C02989C9E</string>
+	<string>0CF5012D3E1B3915A74E8EA35EE8AA64C40B3072</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>ECB3CDCF-902F-4E14-BAB0-EF5C02989C9E</string>
+			<string>0CF5012D3E1B3915A74E8EA35EE8AA64C40B3072</string>
 			<key>IDESourceControlWCCName</key>
 			<string>iLink</string>
 		</dict>
