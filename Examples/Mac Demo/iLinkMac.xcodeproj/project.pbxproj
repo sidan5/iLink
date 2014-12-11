@@ -11,6 +11,7 @@
 		256AC3DA0F4B6AC300CF3369 /* iLinkMacAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* iLinkMacAppDelegate.m */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		CF179B081A398C2000A99164 /* iLink.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CF179B071A398C2000A99164 /* iLink.bundle */; };
 		CF9FB9FD18C11D2C00605AC2 /* iLink.m in Sources */ = {isa = PBXBuildFile; fileRef = CF9FB9FC18C11D2C00605AC2 /* iLink.m */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* iLinkMac-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iLinkMac-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* iLinkMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iLinkMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF179B071A398C2000A99164 /* iLink.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iLink.bundle; sourceTree = "<group>"; };
 		CF9FB9FB18C11D2C00605AC2 /* iLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = iLink.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CF9FB9FC18C11D2C00605AC2 /* iLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = iLink.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 /* End PBXFileReference section */
@@ -120,6 +122,7 @@
 		CF9FB9FA18C11D2C00605AC2 /* iLink */ = {
 			isa = PBXGroup;
 			children = (
+				CF179B071A398C2000A99164 /* iLink.bundle */,
 				CF9FB9FB18C11D2C00605AC2 /* iLink.h */,
 				CF9FB9FC18C11D2C00605AC2 /* iLink.m */,
 			);
@@ -195,6 +198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0147E8D0162088000083DB60 /* MainMenu.xib in Resources */,
+				CF179B081A398C2000A99164 /* iLink.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
