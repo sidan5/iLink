@@ -8,6 +8,6 @@ Pod::Spec.new do |s|
   s.source   = { :git => 'https://github.com/sidan5/iLink.git', :tag => '1.0' }
   s.source_files = 'iLink/iLink.{h,m}'
   s.requires_arc = true
-  s.ios.deployment_target = '4.3'
-  s.osx.deployment_target = '10.6'
+  s.ios.deployment_target = ‘5.1’
+  s.osx.deployment_target = '10.7’
 end
