@@ -83,8 +83,7 @@ extern NSString *const iLinkErrorDomain;
 
 //localisation string keys
 static NSString *const iLinkMessageTitleKey = @"iLinkMessageTitle";
-static NSString *const iLinkAppMessageKey = @"iLinkAppMessage";
-static NSString *const iLinkGameMessageKey = @"iLinkGameMessage";
+static NSString *const iLinkAppMessageKey   = @"iLinkAppMessage";
 static NSString *const iLinkCancelButtonKey = @"iLinkCancelButton";
 static NSString *const iLinkRemindButtonKey = @"iLinkRemindButton";
 static NSString *const iLinkUpdateButtonKey = @"iLinkUpdateButton";
