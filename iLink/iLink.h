@@ -77,16 +77,18 @@
 #endif
 
 
-extern NSUInteger const iLinkAppStoreGameGenreID;
-extern NSString *const iLinkErrorDomain;
+extern NSUInteger   const iLinkAppStoreGameGenreID;
+extern NSString    *const iLinkErrorDomain;
 
 
 //localisation string keys
-static NSString *const iLinkMessageTitleKey = @"iLinkMessageTitle";
-static NSString *const iLinkAppMessageKey   = @"iLinkAppMessage";
-static NSString *const iLinkCancelButtonKey = @"iLinkCancelButton";
-static NSString *const iLinkRemindButtonKey = @"iLinkRemindButton";
-static NSString *const iLinkUpdateButtonKey = @"iLinkUpdateButton";
+static NSString *const iLinkMessageTitleKey         = @"iLinkMessageTitle";
+
+static NSString *const iLinkAppMessageKey           = @"iLinkAppMessage";
+static NSString *const iLinkAppMessageAggressiveKey = @"iLinkAppMessageAggressive";
+static NSString *const iLinkCancelButtonKey         = @"iLinkCancelButton";
+static NSString *const iLinkRemindButtonKey         = @"iLinkRemindButton";
+static NSString *const iLinkUpdateButtonKey         = @"iLinkUpdateButton";
 
 
 
@@ -155,6 +157,7 @@ typedef NS_ENUM(NSUInteger, iLinkErrorCode)
 @property (nonatomic, assign) BOOL verboseLogging;
 @property (nonatomic, assign) BOOL previewMode;
 @property (nonatomic, assign) BOOL globalPromptForUpdate;
+@property (nonatomic, assign) BOOL aggressiveUpdatePrompt;
 @property (nonatomic, assign) NSString *linkParams;
 
 //advanced properties for implementing custom behaviour

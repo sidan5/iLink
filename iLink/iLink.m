@@ -234,6 +234,7 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
         self.verboseLogging = NO;
         self.previewMode = NO;
         self.globalPromptForUpdate = YES;
+        self.aggressiveUpdatePrompt = NO;
         self.linkParams = iLinkParamsCode;
         
 #if DEBUG
@@ -245,6 +246,7 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
         
         //app launched
         [self performSelectorOnMainThread:@selector(applicationLaunched) withObject:nil waitUntilDone:NO];
+    
     }
     return self;
 }
@@ -273,9 +275,17 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
 - (NSString *)message
 {
     NSString *message = _message;
+    
+    NSString *tmpMsg;
+    if ([self aggressiveUpdatePrompt]) {
+        tmpMsg = iLinkAppMessageAggressiveKey;
+    }else{
+        tmpMsg = iLinkAppMessageKey;
+    }
+    
     if (!message)
     {
-        message = [self localizedStringForKey:iLinkAppMessageKey withDefault:@"An update for %@ is available. \n\nWould you like to update it now?"];    }
+        message = [self localizedStringForKey:tmpMsg withDefault:@"An update for %@ is available. \n\nWould you like to update it now?"];    }
     return [message stringByReplacingOccurrencesOfString:@"%@" withString:self.applicationName];
 }
 
@@ -415,6 +425,14 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
     if (self.previewMode)
     {
         NSLog(@"iLink preview mode is enabled - make sure you disable this for release");
+        return YES;
+    }
+    
+    else if (self.globalPromptForUpdate && self.aggressiveUpdatePrompt){
+        if (self.verboseLogging)
+        {
+            NSLog(@"iLink did prompt for update because we are using aggressive mode and ask for prompt");
+        }
         return YES;
     }
     
@@ -852,16 +870,15 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
 {
     if (!self.visibleAlert)
     {
-    
 #if TARGET_OS_IPHONE
-    
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:self.messageTitle
                                                         message:self.message
                                                        delegate:(id<UIAlertViewDelegate>)self
-                                              cancelButtonTitle:[self.cancelButtonLabel length] ? self.cancelButtonLabel: nil
+                                              cancelButtonTitle:
+                             !self.aggressiveUpdatePrompt && [self.cancelButtonLabel length] ? self.cancelButtonLabel: nil
                                               otherButtonTitles:self.updateButtonLabel//self.rateButtonLabel
                               , nil];
-        if ([self.remindButtonLabel length])
+        if (!self.aggressiveUpdatePrompt && [self.remindButtonLabel length])
         {
             [alert addButtonWithTitle:self.remindButtonLabel];
         }
@@ -879,11 +896,11 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
         
         self.visibleAlert = [NSAlert alertWithMessageText:self.messageTitle
                                             defaultButton:self.updateButtonLabel//self.rateButtonLabel
-                                          alternateButton:self.cancelButtonLabel
+                                          alternateButton:!self.aggressiveUpdatePrompt && [self.cancelButtonLabel length] ? self.cancelButtonLabel: nil
                                               otherButton:nil
                                 informativeTextWithFormat:@"%@", self.message];
         
-        if ([self.remindButtonLabel length])
+        if (!self.aggressiveUpdatePrompt && [self.remindButtonLabel length])
         {
             [self.visibleAlert addButtonWithTitle:self.remindButtonLabel];
         }

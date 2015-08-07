@@ -25,6 +25,8 @@
     
     [iLink sharedInstance].applicationVersion = @"1.0";
     
+    //[iLink sharedInstance].aggressiveUpdatePrompt = YES; // Would initiate update prompt always //
+    
     //[iLink sharedInstance].globalPromptForUpdate = NO;
     // enable preview mode //  if YES would show prompt always //
     //[iLink sharedInstance].previewMode = YES;

@@ -1,5 +1,6 @@
 "iLinkMessageTitle" = "Mettre à jour %@";
 "iLinkAppMessage" = "Une nouvelle version de %@ est disponible. \n\nVoulez-vous la télécharger maintenant ?";
+"iLinkAppMessageAggressive" = "An update for %@ is available. \n\nPlease update before continue using the app.";
 "iLinkCancelButton" = "Non, merci";
 "iLinkRemindButton" = "Me le rappeler ultérieurement";
 "iLinkUpdateButton" = "Mettre à jour maintenant";
