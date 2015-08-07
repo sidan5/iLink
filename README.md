@@ -105,6 +105,10 @@ To configure iLink, there are a number of properties of the iLink class that can
     @property (nonatomic, assign) BOOL globalPromptForUpdate;
     
 This would set if iLink would automatically check if there is an update for the app on iTunes and prompt the user to update. Default is set to YES meaning iLink would automatically ask the user to update if there is an update for the app, prompt would include a reminder of 1 day (after user press "Remind me later").
+
+    @property (nonatomic, assign) BOOL aggressiveUpdatePrompt;
+
+This would set if iLink would automatically check if there is an update for the app on iTunes and prompt the user to update always. Default is set to NO, if set to YES meaning iLink would automatically ask the user to update if there is an update for the app, prompt would include only "Update NOW!" option (user WON'T be able to access the app without updating). Use this option carefully.
     
     @property (nonatomic, assign) NSUInteger appStoreID;
 
