@@ -433,7 +433,9 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
         {
             NSLog(@"iLink did prompt for update because we are using aggressive mode and ask for prompt");
         }
-        return YES;
+        if ([self.applicationStoreVersion compare:self.applicationVersion options:NSNumericSearch] == NSOrderedDescending){ // There is a new version
+            return YES;
+        }
     }
     
     else if (!self.globalPromptForUpdate)
