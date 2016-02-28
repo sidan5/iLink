@@ -33,6 +33,8 @@ Installation
 --------------
 
 To install iLink into your app, drag the iLink.h, .m into your project. 
+You could also use cocoapods (recommended) by adding this line to your podfile:
+    pod 'iLink', '~> 1.0.2'
 
 iLink typically requires no configuration at all and will simply run automatically, using the application's bundle ID to look the app ID up on the App Store.
 
