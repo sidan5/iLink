@@ -892,7 +892,7 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
         //only show when main window is available
         if (self.onlyPromptIfMainWindowIsAvailable && ![[NSApplication sharedApplication] mainWindow])
         {
-            [self performSelector:@selector(promptForRating) withObject:nil afterDelay:0.5];
+            [self performSelector:@selector(promptForUpdate) withObject:nil afterDelay:0.5];
             return;
         }
         
