@@ -208,14 +208,14 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
         self.applicationVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
         if ([self.applicationVersion length] == 0)
         {
-            self.applicationVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+            self.applicationVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey];
         }
         
         //localised application name
         self.applicationName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
         if ([self.applicationName length] == 0)
         {
-            self.applicationName = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleNameKey];
+            self.applicationName = [[NSBundle mainBundle] objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleNameKey];
         }
         
         //bundle id
@@ -712,7 +712,7 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
         
         NSError *error = nil;
         NSURLResponse *response = nil;
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:iTunesServiceURL] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:REQUEST_TIMEOUT];
+        NSURLRequest *request = [NSURLRequest requestWithURL:(NSURL *)[NSURL URLWithString:iTunesServiceURL] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:REQUEST_TIMEOUT]; // (NSURL *) is new //
         NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
         NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
         if (data && statusCode == 200)
@@ -1144,7 +1144,7 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
                     offset = messageOffset = label.frame.size.height - height;
                     frame.size.height = label.frame.size.height;
                 }
-                else if ([label.text isEqualToString:alertView.message])
+                else if ([label.text isEqualToString:(NSString *)alertView.message]) // (NSString*) is new //
                 {
                     label.lineBreakMode = NSLineBreakByWordWrapping;
                     label.numberOfLines = 0;

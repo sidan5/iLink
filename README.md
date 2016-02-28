@@ -9,8 +9,8 @@ Please check the Example apps (iOS/Mac) for fast integration.
 Supported OS & SDK Versions
 -----------------------------
 
-* Supported build target - iOS 8.4 / Mac OS 10.10.4 (Xcode 6.4, Apple LLVM compiler 6.1.0)
-* Earliest supported deployment target - iOS 5.1 / Mac OS 10.7
+* Supported build target - iOS 9.2.1 / Mac OS 10.10.4 (Xcode 7.2.1, Apple LLVM compiler 7.0.2)
+* Earliest supported deployment target - iOS 6.0 / Mac OS 10.7
 
 NOTE: 'Supported' means that the library has been tested with this version. 'Compatible' means that the library should work on this OS version (i.e. it doesn't rely on any unavailable SDK features) but is no longer being tested for compatibility and may require tweaking or bug fixes to run correctly.
 
@@ -33,7 +33,9 @@ Installation
 --------------
 
 To install iLink into your app, drag the iLink.h, .m into your project. 
+
 You could also use cocoapods (recommended) by adding this line to your podfile:
+    
     pod 'iLink', '~> 1.0.2'
 
 iLink typically requires no configuration at all and will simply run automatically, using the application's bundle ID to look the app ID up on the App Store.

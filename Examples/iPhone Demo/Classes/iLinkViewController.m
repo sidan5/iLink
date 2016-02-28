@@ -10,9 +10,5 @@
 
 @implementation iLinkViewController
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(__unused UIInterfaceOrientation)toInterfaceOrientation
-{
-    return YES;
-}
 
 @end
