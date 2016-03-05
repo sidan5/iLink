@@ -86,14 +86,14 @@ static NSString *const iLinkUseCountKey = @"iLinkUseCount";
 static NSString *const iLinkEventCountKey = @"iLinkEventCount";
 
 static NSString *const iLinkMacAppStoreBundleID = @"com.apple.appstore";
-static NSString *const iLinkAppLookupURLFormat = @"http://itunes.apple.com/%@/lookup";
+static NSString *const iLinkAppLookupURLFormat = @"https://itunes.apple.com/%@/lookup";
 
 static NSString *const iLinkiOSAppStoreURLScheme = @"itms-apps";
 static NSString *const iLinkiOSAppStoreURLFormat = @"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@?%@";
 static NSString *const iLinkiOS7AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%@?%@";
 static NSString *const iLinkMacAppStoreURLFormat = @"macappstore://itunes.apple.com/app/id%@?%@";
 
-static NSString *const iLinkRegulariOSAppStoreURLFormat = @"http://itunes.apple.com/app/id%@?%@";
+static NSString *const iLinkRegulariOSAppStoreURLFormat = @"https://itunes.apple.com/app/id%@?%@";
 
 static NSString *const iLinkArtistAppStoreURLFormat = @"https://itunes.apple.com/artist/id%@?%@";
 static NSString *const iLinkiOSArtistAppStoreURLFormat = @"itms-apps://itunes.apple.com/artist/id%@?%@";
