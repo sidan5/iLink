@@ -159,6 +159,7 @@ typedef NS_ENUM(NSUInteger, iLinkErrorCode)
 @property (nonatomic, assign) BOOL globalPromptForUpdate;
 @property (nonatomic, assign) BOOL aggressiveUpdatePrompt;
 @property (nonatomic, assign) NSString *linkParams;
+@property (nonatomic, assign) BOOL localNotificationWhenUpdate;
 
 //advanced properties for implementing custom behaviour
 @property (nonatomic, strong) NSURL *ratingsURL, *appLocalURL,*appShareURL, *artistURL;
@@ -189,6 +190,12 @@ typedef NS_ENUM(NSUInteger, iLinkErrorCode)
 // Rating links //
 - (void)iLinkOpenRatingsPageInAppStore; // Use this so iLink would open the rating page on the appropriate way (on any case open the store directly without opening safari first)
 - (NSURL *)iLinkGetRatingURL; // Use this to open the store on the rating page
+
+// Update checks - If you want this to work don't forget to mark the "Background Fetch" on the app background modes settings //
+-(void)checkForUpdateOnBackground; // Would produce local notification if an update is available on store //
+-(BOOL)isUpdateLocalNotification:(UILocalNotification *)notification;
+
+-(void)promptForUpdate;
 
 @end
 

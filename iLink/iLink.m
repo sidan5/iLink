@@ -81,6 +81,7 @@ static NSString *const iLinkArtistIDKey = @"iLinkArtistID";
 static NSString *const iLinkDeclinedVersionKey = @"iLinkDeclinedVersion";
 static NSString *const iLinkLastRemindedKey = @"iLinkLastReminded";
 static NSString *const iLinkLastVersionUsedKey = @"iLinkLastVersionUsed";
+static NSString *const iLinkIsUpdateNotificationScheduledKey = @"iLinkIsUpdateNotificationScheduled";
 static NSString *const iLinkFirstUsedKey = @"iLinkFirstUsed";
 static NSString *const iLinkUseCountKey = @"iLinkUseCount";
 static NSString *const iLinkEventCountKey = @"iLinkEventCount";
@@ -98,6 +99,8 @@ static NSString *const iLinkRegulariOSAppStoreURLFormat = @"https://itunes.apple
 static NSString *const iLinkArtistAppStoreURLFormat = @"https://itunes.apple.com/artist/id%@?%@";
 static NSString *const iLinkiOSArtistAppStoreURLFormat = @"itms-apps://itunes.apple.com/artist/id%@?%@";
 static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.apple.com/artist/id%@?%@";
+
+static NSInteger const kUpdateNotification = 34567; // Just a randoom number to mark library notifications //
 
 #define SECONDS_IN_A_DAY 86400.0
 #define SECONDS_IN_A_WEEK 604800.0
@@ -236,6 +239,7 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
         self.globalPromptForUpdate = YES;
         self.aggressiveUpdatePrompt = NO;
         self.linkParams = iLinkParamsCode;
+        self.localNotificationWhenUpdate = NO;
         
 #if DEBUG
         
@@ -425,6 +429,7 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
     if (self.previewMode)
     {
         NSLog(@"iLink preview mode is enabled - make sure you disable this for release");
+        [self sheduleLocalUpdateNotification];
         return YES;
     }
     
@@ -434,6 +439,7 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
             NSLog(@"iLink did prompt for update because we are using aggressive mode and ask for prompt");
         }
         if ([self.applicationStoreVersion compare:self.applicationVersion options:NSNumericSearch] == NSOrderedDescending){ // There is a new version
+            [self sheduleLocalUpdateNotification];
             return YES;
         }
     }
@@ -518,6 +524,7 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
     }else if (self.applicationStoreVersion!=nil){
         
         if ([self.applicationStoreVersion compare:self.applicationVersion options:NSNumericSearch] == NSOrderedDescending){ // There is a new version
+            [self sheduleLocalUpdateNotification];
         return YES;
         }
     }
@@ -931,6 +938,9 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
         [defaults setInteger:0 forKey:iLinkUseCountKey];
         [defaults setInteger:0 forKey:iLinkEventCountKey];
         [defaults setObject:nil forKey:iLinkLastRemindedKey];
+        
+        [defaults setBool:FALSE forKey:iLinkIsUpdateNotificationScheduledKey];
+        
         [defaults synchronize];
 
         //inform about app update
@@ -939,6 +949,10 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
     
     [self incrementUseCount];
     [self checkForConnectivityInBackground];
+    
+    if (self.localNotificationWhenUpdate) {
+        [self initUpdateLocalNotification];
+    }
     
     // Ugly implementation for waiting till network respond. Should be done by a callback.
     double delayInSeconds = 2.0;
@@ -1542,6 +1556,121 @@ static NSString *const iLinkMacArtistAppStoreURLFormat = @"macappstore://itunes.
     [self openArtistPageInAppStore];
 }
 
+
+-(void)initUpdateLocalNotification{
+    UIUserNotificationType userNotificationTypes = (UIUserNotificationType)(UIUserNotificationTypeAlert |
+                                                                            UIUserNotificationTypeBadge |
+                                                                            UIUserNotificationTypeSound);
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+                                                                             categories:nil];
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }else{
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationType)(UIRemoteNotificationTypeBadge|
+                                                                                                         UIRemoteNotificationTypeAlert|
+                                                                                                         UIRemoteNotificationTypeSound)];
+    }
+}
+
+// This would initiate a local notification if there is an update //
+-(void)checkForUpdateOnBackground{
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground)
+    {
+        [self checkForConnectivityInBackground];
+   
+    }
+}
+
+-(void)sheduleLocalUpdateNotification{
+    if ([self.applicationStoreVersion compare:self.applicationVersion options:NSNumericSearch] == NSOrderedDescending){
+        if (self.localNotificationWhenUpdate) {
+            // Schecdule local notification if haven't done so yet (for this version) //
+            if (![[NSUserDefaults standardUserDefaults] boolForKey: iLinkIsUpdateNotificationScheduledKey]) {
+                if (self.verboseLogging) {
+                    NSLog(@"Local notification should schedule");
+                }
+                
+                [self scheduleLocalNotification:[self dateByAddingMinutes:1] withMessage:@"An update is available"];
+                [[NSUserDefaults standardUserDefaults] setBool:TRUE forKey:iLinkIsUpdateNotificationScheduledKey];
+            }
+            
+        }
+ 
+    }
+}
+
+
+
+- (void)scheduleLocalNotification:(NSDate *)toDate withMessage:(NSString *)messageBody
+{
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    if (!notification)
+        return;
+    
+    notification.fireDate = toDate;
+    notification.timeZone = [NSTimeZone defaultTimeZone];
+    
+    notification.alertBody = messageBody;
+    notification.alertAction = @"View";
+    
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    
+    
+    NSNumber *type;
+    
+    type = [self updateNotificationType];//[NSNumber numberWithInteger:kUpdateNotification];
+    notification.userInfo = @{@"type": type};
+    
+    NSLog(@"%@",notification.fireDate);
+    
+    // Schedule the notification
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    
+    
+}
+
+
+-(BOOL)isUpdateLocalNotification:(UILocalNotification *)notification{
+    NSDictionary *userInfo = [notification userInfo];
+    NSNumber* typeFromNotif = [userInfo objectForKey:@"type"];
+    
+    if ((typeFromNotif!=nil)&&([typeFromNotif isEqualToNumber:[self updateNotificationType]])) {
+        return TRUE;
+    }
+    return FALSE;
+}
+
+-(NSNumber *)updateNotificationType{
+    return [NSNumber numberWithInteger:kUpdateNotification];
+}
+
+- (NSDate *)dateByAddingDays:(NSInteger)daysToAdd
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    calendar.timeZone = [NSTimeZone systemTimeZone];
+    
+    NSDateComponents *components = [calendar components:(NSCalendarUnit)(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSWeekCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit) fromDate:[NSDate date]];
+    
+    NSDateComponents *futuredayComponents = components;
+    [futuredayComponents setDay:[futuredayComponents day] + daysToAdd];
+    
+    return [calendar dateFromComponents:futuredayComponents];
+}
+
+- (NSDate *)dateByAddingMinutes:(NSInteger)minutesToAdd
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    calendar.timeZone = [NSTimeZone systemTimeZone];
+    
+    NSDateComponents *components = [calendar components:(NSCalendarUnit)(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSWeekCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit) fromDate:[NSDate date]];
+    
+    NSDateComponents *futuredayComponents = components;
+    [futuredayComponents setMinute:[futuredayComponents minute] + minutesToAdd];
+    
+    return [calendar dateFromComponents:futuredayComponents];
+}
 
 
 @end

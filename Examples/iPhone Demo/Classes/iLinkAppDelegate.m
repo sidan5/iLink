@@ -25,17 +25,20 @@
     
     [iLink sharedInstance].applicationVersion = @"1.0";
     
+    [iLink sharedInstance].localNotificationWhenUpdate = YES;
+    
     //[iLink sharedInstance].aggressiveUpdatePrompt = YES; // Would initiate update prompt always //
     
     //[iLink sharedInstance].globalPromptForUpdate = NO;
     // enable preview mode //  if YES would show prompt always //
-    //[iLink sharedInstance].previewMode = YES;
+    [iLink sharedInstance].previewMode = YES;
 }
 
 - (BOOL)application:(__unused UIApplication *)application didFinishLaunchingWithOptions:(__unused NSDictionary *)launchOptions
 {    
     [self.window makeKeyAndVisible];
     
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
     return YES;
 }
@@ -50,4 +53,29 @@
     //[[iLink sharedInstance] iLinkOpenAppPageInAppStoreWithAppleID:553834731]; // Would open a different app then the current, For example the paid version. Just put the Apple ID of that app.
 }
 
+#pragma mark Notifications
+
+
+-(void) application:(__unused UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification{
+    
+    
+    if ([[iLink sharedInstance] isUpdateLocalNotification:notification] ) {
+        [[iLink sharedInstance] promptForUpdate];
+    }
+    
+    NSLog(@" notification recived %@",[notification description] ); 
+    
+}
+
+
+-(void) application:(__unused UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    NSLog(@"application performFetchWithCompletionHandler");
+    [[iLink sharedInstance] checkForUpdateOnBackground]; // JUST for debug ///
+    
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        completionHandler(UIBackgroundFetchResultNewData);
+    });
+}
 @end
