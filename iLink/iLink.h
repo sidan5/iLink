@@ -193,9 +193,9 @@ typedef NS_ENUM(NSUInteger, iLinkErrorCode)
 
 // Update checks - If you want this to work don't forget to mark the "Background Fetch" on the app background modes settings //
 -(void)checkForUpdateOnBackground; // Would produce local notification if an update is available on store //
--(BOOL)isUpdateLocalNotification:(UILocalNotification *)notification;
+-(BOOL)isUpdateLocalNotification:(UILocalNotification *)notification; // Check if local notification is an update notification of iLink //
 
--(void)promptForUpdate;
+-(void)promptForUpdate; // This should be inside the library //
 
 @end
 

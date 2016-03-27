@@ -1568,9 +1568,7 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
         [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
         [[UIApplication sharedApplication] registerForRemoteNotifications];
     }else{
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationType)(UIRemoteNotificationTypeBadge|
-                                                                                                         UIRemoteNotificationTypeAlert|
-                                                                                                         UIRemoteNotificationTypeSound)];
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationType)(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound)];
     }
 }
 

@@ -1,7 +1,7 @@
 Purpose
 --------------
 
-iLink is a library that help you build the right link to the App Store for any usage within your app (appropriate link to rate, link to share for the app or for the developer profile) all this without knowing the Apple ID of the app or details about developer account (usually you should set it beforehand but you don't have to anymore). This library would also prompt the user to update the app if there is a newer version on the App Store.
+iLink is a library that help you build the right link to the App Store for any usage within your app (appropriate link to rate, link to share for the app or for the developer profile) all this without knowing the Apple ID of the app or details about developer account (usually you should set it beforehand but you don't have to anymore). This library would also prompt the user to update the app if there is a newer version on the App Store. Also can initiate a local notification if there is an update (background fetch).
 Works both on iOS & Mac OS-X, Just drop the 2 files of the library directly to your project and use the methods to open the app page or developer page without setting up anything beforehand.
 
 Please check the Example apps (iOS/Mac) for fast integration.

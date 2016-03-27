@@ -25,7 +25,7 @@
     
     [iLink sharedInstance].applicationVersion = @"1.0";
     
-    [iLink sharedInstance].localNotificationWhenUpdate = YES;
+    [iLink sharedInstance].localNotificationWhenUpdate = YES; // This is optional if you want library to send local notification when an update is avilable //
     
     //[iLink sharedInstance].aggressiveUpdatePrompt = YES; // Would initiate update prompt always //
     
@@ -38,6 +38,7 @@
 {    
     [self.window makeKeyAndVisible];
     
+    // Needed for background fetch (check if an update is available on background) //
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
     return YES;
@@ -53,7 +54,7 @@
     //[[iLink sharedInstance] iLinkOpenAppPageInAppStoreWithAppleID:553834731]; // Would open a different app then the current, For example the paid version. Just put the Apple ID of that app.
 }
 
-#pragma mark Notifications
+#pragma mark Local Notifications (needed for checking store version on background and show update prompt when user click on the notification)
 
 
 -(void) application:(__unused UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification{
