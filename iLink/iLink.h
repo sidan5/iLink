@@ -191,11 +191,13 @@ typedef NS_ENUM(NSUInteger, iLinkErrorCode)
 - (void)iLinkOpenRatingsPageInAppStore; // Use this so iLink would open the rating page on the appropriate way (on any case open the store directly without opening safari first)
 - (NSURL *)iLinkGetRatingURL; // Use this to open the store on the rating page
 
+#if TARGET_OS_IPHONE // we support this only for iOS
 // Update checks - If you want this to work don't forget to mark the "Background Fetch" on the app background modes settings //
 -(void)checkForUpdateOnBackground; // Would produce local notification if an update is available on store //
 -(BOOL)isUpdateLocalNotification:(UILocalNotification *)notification; // Check if local notification is an update notification of iLink //
 
 -(void)promptForUpdate; // This should be inside the library //
+#endif
 
 @end
 

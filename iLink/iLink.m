@@ -429,7 +429,9 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
     if (self.previewMode)
     {
         NSLog(@"iLink preview mode is enabled - make sure you disable this for release");
+       #if TARGET_OS_IPHONE
         [self sheduleLocalUpdateNotification];
+#endif
         return YES;
     }
     
@@ -439,7 +441,9 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
             NSLog(@"iLink did prompt for update because we are using aggressive mode and ask for prompt");
         }
         if ([self.applicationStoreVersion compare:self.applicationVersion options:NSNumericSearch] == NSOrderedDescending){ // There is a new version
+            #if TARGET_OS_IPHONE
             [self sheduleLocalUpdateNotification];
+#endif
             return YES;
         }
     }
@@ -524,7 +528,9 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
     }else if (self.applicationStoreVersion!=nil){
         
         if ([self.applicationStoreVersion compare:self.applicationVersion options:NSNumericSearch] == NSOrderedDescending){ // There is a new version
+#if TARGET_OS_IPHONE
             [self sheduleLocalUpdateNotification];
+#endif
         return YES;
         }
     }
@@ -914,7 +920,7 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
             [self.visibleAlert addButtonWithTitle:self.remindButtonLabel];
         }
         
-        [self.visibleAlert beginSheetModalForWindow:[[NSApplication sharedApplication] mainWindow]
+        [self.visibleAlert beginSheetModalForWindow:(NSWindow * __nonnull)[[NSApplication sharedApplication] mainWindow]
                                       modalDelegate:self
                                      didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:)
                                         contextInfo:nil];
@@ -949,10 +955,11 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
     
     [self incrementUseCount];
     [self checkForConnectivityInBackground];
-    
+ #if TARGET_OS_IPHONE
     if (self.localNotificationWhenUpdate) {
         [self initUpdateLocalNotification];
     }
+#endif
     
     // Ugly implementation for waiting till network respond. Should be done by a callback.
     double delayInSeconds = 2.0;
@@ -1556,7 +1563,7 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
     [self openArtistPageInAppStore];
 }
 
-
+#if TARGET_OS_IPHONE
 -(void)initUpdateLocalNotification{
     UIUserNotificationType userNotificationTypes = (UIUserNotificationType)(UIUserNotificationTypeAlert |
                                                                             UIUserNotificationTypeBadge |
@@ -1571,6 +1578,7 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationType)(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound)];
     }
 }
+
 
 // This would initiate a local notification if there is an update //
 -(void)checkForUpdateOnBackground{
@@ -1639,6 +1647,7 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
     }
     return FALSE;
 }
+#endif
 
 -(NSNumber *)updateNotificationType{
     return [NSNumber numberWithInteger:kUpdateNotification];

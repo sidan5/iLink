@@ -37,9 +37,11 @@
 - (BOOL)application:(__unused UIApplication *)application didFinishLaunchingWithOptions:(__unused NSDictionary *)launchOptions
 {    
     [self.window makeKeyAndVisible];
-    
+ 
+#if TARGET_OS_IPHONE
     // Needed for background fetch (check if an update is available on background) //
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+#endif
     
     return YES;
 }
@@ -56,7 +58,7 @@
 
 #pragma mark Local Notifications (needed for checking store version on background and show update prompt when user click on the notification)
 
-
+#if TARGET_OS_IPHONE
 -(void) application:(__unused UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification{
     
     
@@ -79,4 +81,5 @@
         completionHandler(UIBackgroundFetchResultNewData);
     });
 }
+#endif
 @end
