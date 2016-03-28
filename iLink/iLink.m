@@ -955,7 +955,7 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
     
     [self incrementUseCount];
     [self checkForConnectivityInBackground];
- #if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
     if (self.localNotificationWhenUpdate) {
         [self initUpdateLocalNotification];
     }
@@ -1563,7 +1563,7 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
     [self openArtistPageInAppStore];
 }
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE 
 -(void)initUpdateLocalNotification{
     UIUserNotificationType userNotificationTypes = (UIUserNotificationType)(UIUserNotificationTypeAlert |
                                                                             UIUserNotificationTypeBadge |

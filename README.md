@@ -38,6 +38,8 @@ You could also use cocoapods (recommended) by adding this line to your podfile:
     
     pod 'iLink', '~> 1.0.6'
 
+Important: Currently the pod works only for iOS (we stopped supporting OS-X because of cocoapods bug). You can use 1.0.5 for OS-X (not supporting local notifications on iOS) or import the library manually.
+
 iLink typically requires no configuration at all and will simply run automatically, using the application's bundle ID to look the app ID up on the App Store.
 
 **Note:** If you have apps with matching bundle IDs on both the Mac and iOS app stores (even if they use different capitalisation), the lookup mechanism won't work, so you'll need to manually set the appStoreID property, which is a numeric ID that can be found in iTunes Connect after you set up an app. Also, if you are creating a sandboxed Mac app and your app does not request the network access permission then you will need to set the appStoreID because it cannot be retrieved from the iTunes service. 
