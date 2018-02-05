@@ -64,7 +64,7 @@
 #endif
 
 
-#pragma GCC diagnostic ignored "-Wreceiver-is-weak"
+//#pragma GCC diagnostic ignored "-Wreceiver-is-weak"
 #pragma GCC diagnostic ignored "-Warc-repeated-use-of-weak"
 #pragma GCC diagnostic ignored "-Wobjc-missing-property-synthesis"
 #pragma GCC diagnostic ignored "-Wdirect-ivar-access"
@@ -92,6 +92,7 @@ static NSString *const iLinkAppLookupURLFormat = @"https://itunes.apple.com/%@/l
 static NSString *const iLinkiOSAppStoreURLScheme = @"itms-apps";
 static NSString *const iLinkiOSAppStoreURLFormat = @"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@?%@";
 static NSString *const iLinkiOS7AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%@?%@";
+static NSString *const iLinkiOS11AppStoreURLFormat = @"https://itunes.apple.com/app/id%@?%@&action=write-review";
 static NSString *const iLinkMacAppStoreURLFormat = @"macappstore://itunes.apple.com/app/id%@?%@";
 
 static NSString *const iLinkRegulariOSAppStoreURLFormat = @"https://itunes.apple.com/app/id%@?%@";
@@ -322,7 +323,13 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
     
 #if TARGET_OS_IPHONE
     
-    return [NSURL URLWithString:[NSString stringWithFormat:([[UIDevice currentDevice].systemVersion floatValue] >= 7.0f)? iLinkiOS7AppStoreURLFormat: iLinkiOSAppStoreURLFormat, @(self.appStoreID),iLinkParamsCode]];
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 11.0f) {
+        return [NSURL URLWithString:[NSString stringWithFormat:iLinkiOS11AppStoreURLFormat, @(self.appStoreID),iLinkParamsCode]];
+    }else if ([[UIDevice currentDevice].systemVersion floatValue] >= 7.0f) {
+        return [NSURL URLWithString:[NSString stringWithFormat:iLinkiOS7AppStoreURLFormat, @(self.appStoreID),iLinkParamsCode]];
+    }else{
+        return [NSURL URLWithString:[NSString stringWithFormat:iLinkiOSAppStoreURLFormat, @(self.appStoreID),iLinkParamsCode]];
+    }
     
 #else
     
@@ -388,7 +395,8 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
 
 - (float)usesPerWeek
 {
-    return (float)self.usesCount / ([[NSDate date] timeIntervalSinceDate:self.firstUsed] / SECONDS_IN_A_WEEK);
+    float weekTime = ([[NSDate date] timeIntervalSinceDate:self.firstUsed] / SECONDS_IN_A_WEEK);
+    return (float)self.usesCount / weekTime;
 }
 
 - (BOOL)declinedThisVersion
@@ -438,7 +446,7 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
     else if (self.globalPromptForUpdate && self.aggressiveUpdatePrompt){
         if (self.verboseLogging)
         {
-            NSLog(@"iLink did prompt for update because we are using aggressive mode and ask for prompt");
+            NSLog(@"iLink would prompt for update if new version available because we are using aggressive mode and ask for prompt");
         }
         if ([self.applicationStoreVersion compare:self.applicationVersion options:NSNumericSearch] == NSOrderedDescending){ // There is a new version
             #if TARGET_OS_IPHONE
@@ -488,11 +496,11 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
     }
     
     //check how long we've been using this version
-    else if ([[NSDate date] timeIntervalSinceDate:self.firstUsed] < self.daysUntilPrompt * SECONDS_IN_A_DAY)
+    else if ([[NSDate date] timeIntervalSinceDate:self.firstUsed] < (double)(self.daysUntilPrompt) * SECONDS_IN_A_DAY)
     {
         if (self.verboseLogging)
         {
-            NSLog(@"iLink did not prompt for update because the app was first used less than %g days ago", self.daysUntilPrompt);
+            NSLog(@"iLink did not prompt for update because the app was first used less than %f days ago", (double)(self.daysUntilPrompt));
         }
         return NO;
     }
@@ -512,17 +520,17 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
     {
         if (self.verboseLogging)
         {
-            NSLog(@"iLink did not prompt for update because the app has only been used %g times per week on average since it was installed", self.usesPerWeek);
+            NSLog(@"iLink did not prompt for update because the app has only been used %f times per week on average since it was installed", (double)self.usesPerWeek);
         }
         return NO;
     }
 
     //check if within the reminder period
-    else if (self.lastReminded != nil && [[NSDate date] timeIntervalSinceDate:self.lastReminded] < self.remindPeriod * SECONDS_IN_A_DAY)
+    else if (self.lastReminded != nil && [[NSDate date] timeIntervalSinceDate:self.lastReminded] < (double)self.remindPeriod * SECONDS_IN_A_DAY)
     {
         if (self.verboseLogging)
         {
-            NSLog(@"iLink did not prompt for update because the user last asked to be reminded less than %g days ago", self.remindPeriod);
+            NSLog(@"iLink did not prompt for update because the user last asked to be reminded less than %g days ago", (double)self.remindPeriod);
         }
         return NO;
     }else if (self.applicationStoreVersion!=nil){
@@ -1150,8 +1158,8 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
     if ([[UIDevice currentDevice].systemVersion floatValue] < 7.0f)
     {
         NSInteger imageCount = 0;
-        CGFloat offset = 0.0f;
-        CGFloat messageOffset = 0.0f;
+        CGFloat offset = 0.0;
+        CGFloat messageOffset = 0.0;
         for (UIView *view in alertView.subviews)
         {
             CGRect frame = view.frame;
@@ -1169,7 +1177,7 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
                 {
                     label.lineBreakMode = NSLineBreakByWordWrapping;
                     label.numberOfLines = 0;
-                    label.alpha = 1.0f;
+                    label.alpha = 1.0;
                     [label sizeToFit];
                     offset += label.frame.size.height - frame.size.height;
                     frame.origin.y += messageOffset;
@@ -1178,13 +1186,13 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
             }
             else if ([view isKindOfClass:[UITextView class]])
             {
-                view.alpha = 0.0f;
+                view.alpha = 0.0;
             }
             else if ([view isKindOfClass:[UIImageView class]])
             {
                 if (imageCount++ > 0)
                 {
-                    view.alpha = 0.0f;
+                    view.alpha = 0.0;
                 }
             }
             else if ([view isKindOfClass:[UIControl class]])
@@ -1194,7 +1202,7 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
             view.frame = frame;
         }
         CGRect frame = alertView.frame;
-        frame.origin.y -= roundf(offset/2.0f);
+        frame.origin.y -= (double)roundf((double)offset/((double)2.0));
         frame.size.height += offset;
         alertView.frame = frame;
     }
@@ -1571,12 +1579,10 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
                                                                              categories:nil];
     
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
-        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
-    }else{
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationType)(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound)];
-    }
+    
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    
 }
 
 
@@ -1658,7 +1664,7 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
     NSCalendar *calendar = [NSCalendar currentCalendar];
     calendar.timeZone = [NSTimeZone systemTimeZone];
     
-    NSDateComponents *components = [calendar components:(NSCalendarUnit)(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSWeekCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit) fromDate:[NSDate date]];
+    NSDateComponents *components = [calendar components:(NSCalendarUnit)(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitWeekOfYear|NSCalendarUnitHour|NSCalendarUnitMinute) fromDate:[NSDate date]];
     
     NSDateComponents *futuredayComponents = components;
     [futuredayComponents setDay:[futuredayComponents day] + daysToAdd];
@@ -1671,7 +1677,8 @@ static NSInteger const kUpdateNotification = 34567; // Just a randoom number to 
     NSCalendar *calendar = [NSCalendar currentCalendar];
     calendar.timeZone = [NSTimeZone systemTimeZone];
     
-    NSDateComponents *components = [calendar components:(NSCalendarUnit)(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSWeekCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit) fromDate:[NSDate date]];
+    //NSDateComponents *components = [calendar components:(NSCalendarUnit)(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSWeekCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit) fromDate:[NSDate date]];
+    NSDateComponents *components = [calendar components:(NSCalendarUnit)(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitWeekOfYear|NSCalendarUnitHour|NSCalendarUnitMinute) fromDate:[NSDate date]];
     
     NSDateComponents *futuredayComponents = components;
     [futuredayComponents setMinute:[futuredayComponents minute] + minutesToAdd];

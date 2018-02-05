@@ -20,10 +20,10 @@
     //set the bundle ID. normally you wouldn't need to do this
     //as it is picked up automatically from your Info.plist file
     //but we want to test with an app that's actually on the store
-    [iLink sharedInstance].applicationBundleID = @"com.clickgamer.AngryBirds";
+    [iLink sharedInstance].applicationBundleID = @"com.clickgamer.AngryBirds"; // For test purposes //
 	[iLink sharedInstance].onlyPromptIfLatestVersion = NO;
     
-    [iLink sharedInstance].applicationVersion = @"1.0";
+    [iLink sharedInstance].applicationVersion = @"1.0"; // For test purposes //
     
     [iLink sharedInstance].localNotificationWhenUpdate = YES; // This is optional if you want library to send local notification when an update is avilable //
     
@@ -54,6 +54,8 @@
     
     //[[iLink sharedInstance] iLinkOpenDeveloperPage]; // Would open developer page on the App Store
     //[[iLink sharedInstance] iLinkOpenAppPageInAppStoreWithAppleID:553834731]; // Would open a different app then the current, For example the paid version. Just put the Apple ID of that app.
+    
+    //[[iLink sharedInstance] iLinkOpenRatingsPageInAppStore]; // Would open rating page on the App Store depend on OS version //
 }
 
 #pragma mark Local Notifications (needed for checking store version on background and show update prompt when user click on the notification)

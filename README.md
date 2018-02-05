@@ -1,7 +1,8 @@
 Purpose
 --------------
 
-iLink is a library that help you build the right link to the App Store for any usage within your app (appropriate link to rate, link to share for the app or for the developer profile) all this without knowing the Apple ID of the app or details about developer account (usually you should set it beforehand but you don't have to anymore). This library would also prompt the user to update the app if there is a newer version on the App Store. Also can initiate a local notification if there is an update (background fetch).
+Different iOS/OS-X versions require different link building for rating or sharing the app, for developer profile etc. iLink is the library that would do all this for you at run time with almost no setup (no need to set up the Apple ID of the app or any details about developer account).
+This library would also prompt the user to update the app if there is a newer version on the App Store (optional). Also, can initiate a local notification if there is an update (background fetch).
 Works both on iOS & Mac OS-X, Just drop the 2 files of the library directly to your project and use the methods to open the app page or developer page without setting up anything beforehand.
 
 Please check the Example apps (iOS/Mac) for fast integration.
@@ -9,8 +10,8 @@ Please check the Example apps (iOS/Mac) for fast integration.
 Supported OS & SDK Versions
 -----------------------------
 
-* Supported build target - iOS 9.2.1 / Mac OS 10.10.5 (Xcode 7.2.1, Apple LLVM compiler 7.0.2)
-* Earliest supported deployment target - iOS 6.0 / Mac OS 10.7
+* Supported build target - iOS 11.2.5 / Mac OS 10.12.6 (Xcode 9.2, Apple LLVM compiler 9.0)
+* Earliest supported deployment target - iOS 8.0 / Mac OS 10.12
 
 NOTE: 'Supported' means that the library has been tested with this version. 'Compatible' means that the library should work on this OS version (i.e. it doesn't rely on any unavailable SDK features) but is no longer being tested for compatibility and may require tweaking or bug fixes to run correctly.
 
@@ -36,7 +37,7 @@ To install iLink into your app, drag the iLink.h, .m into your project.
 
 You could also use cocoapods (recommended) by adding this line to your podfile:
     
-    pod 'iLink', '~> 1.0.6'
+    pod 'iLink', '~> 1.1.0'
 
 Important: Currently the pod works only for iOS (we stopped supporting OS-X because of cocoapods bug). You can use 1.0.5 for OS-X (not supporting local notifications on iOS) or import the library manually.
 
@@ -51,7 +52,7 @@ If you do wish to customise iLink, the best time to do this is *before* the app 
 	+ (void)initialize
 	{
 		//configure iLink
-		[iLink sharedInstance].globalPromptForUpdate = YES; // If you want iLink to prompt user to update when the app is old.
+		[iLink sharedInstance].globalPromptForUpdate = YES; // If you want iLink to automatically prompt user to update when there is an update. Otherwise just set it to "NO".
 	}
 	
 	
