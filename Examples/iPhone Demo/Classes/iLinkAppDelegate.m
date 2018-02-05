@@ -27,9 +27,9 @@
     
     [iLink sharedInstance].localNotificationWhenUpdate = YES; // This is optional if you want library to send local notification when an update is avilable //
     
-    //[iLink sharedInstance].aggressiveUpdatePrompt = YES; // Would initiate update prompt always //
+    //[iLink sharedInstance].aggressiveUpdatePrompt = YES; // Would initiate update prompt always, blocking the screen //
     
-    //[iLink sharedInstance].globalPromptForUpdate = NO;
+    //[iLink sharedInstance].globalPromptForUpdate = NO; // Set it to "NO" if you don't want to use update prompt when new version is avilable //
     // enable preview mode //  if YES would show prompt always //
     [iLink sharedInstance].previewMode = YES;
 }
@@ -41,6 +41,14 @@
 #if TARGET_OS_IPHONE
     // Needed for background fetch (check if an update is available on background) //
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+
+#if DEBUG
+    // Below is just to show prompt on testing, no need on production //
+    if ([iLink sharedInstance].globalPromptForUpdate) {
+        [[iLink sharedInstance] promptForUpdate];
+    }
+#endif
+    
 #endif
     
     return YES;
